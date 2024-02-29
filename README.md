@@ -48,3 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   app.appendChild(timer2.element);
 });
 ```
+
+## To Do
+
+- [ ] Apply scoped CSS styles to each instance
