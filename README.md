@@ -1,6 +1,6 @@
 # Pomodoro Timer Component
 
-The Pomodoro Timer Component is a versatile, customizable web component designed to integrate a Pomodoro technique timer into web applications. It supports the standard Pomodoro technique cycles, including work periods (pomodoros), short breaks, and long breaks, with customization options for each duration and the cycle count.
+This is a prototype for a class-based Pomodoro timer widget built with vanilla JavaScript.
 
 ## Deisgn Considerations
 
