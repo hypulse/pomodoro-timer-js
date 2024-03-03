@@ -50,6 +50,8 @@ class Timer {
     if (this._state.isRunning) {
       this.startTimer();
     }
+
+    this.plugins = [];
   }
 
   initElement(id, html, css) {
@@ -159,6 +161,19 @@ class Timer {
     const isLongBreak = this._state.cycle % this._state.longBreakInterval === 0;
     this._state.cycle++;
     isLongBreak ? this.changeMode("longBreak") : this.changeMode("shortBreak");
+  }
+
+  registerPlugin(plugin) {
+    this.plugins.push(plugin);
+    plugin.activate();
+  }
+
+  unregisterPlugin(plugin) {
+    const index = this.plugins.indexOf(plugin);
+    if (index > -1) {
+      this.plugins[index].deactivate();
+      this.plugins.splice(index, 1);
+    }
   }
 }
 
