@@ -43,15 +43,11 @@ class Timer {
      */
     this._state = new Proxy({}, handler);
 
-    Object.assign(this._state, defaultOptions, options);
-
     this.timer = null;
 
-    if (this._state.isRunning) {
-      this.startTimer();
-    }
-
     this.plugins = [];
+
+    this.init(options);
   }
 
   initElement(id, html, css) {
@@ -91,6 +87,14 @@ class Timer {
     this.startControl?.addEventListener("click", () => {
       this._state.isRunning ? this.pauseTimer() : this.startTimer();
     });
+  }
+
+  init(options) {
+    Object.assign(this._state, defaultOptions, options);
+
+    if (this._state.isRunning) {
+      this.startTimer();
+    }
   }
 
   updateDisplay({ property, value, prevValue }) {
@@ -139,28 +143,38 @@ class Timer {
         }
       }
     }, 1000);
+
+    this.notifyPlugins("TIMER_START");
   }
 
   pauseTimer() {
     this._state.isRunning = false;
 
     clearInterval(this.timer);
+
+    this.notifyPlugins("TIMER_PAUSE");
   }
 
   changeMode(mode) {
     this.pauseTimer();
     this._state.currentTab = mode;
     this._state.currentTimer = this._state[`${mode}Time`];
+
+    this.notifyPlugins("TIMER_STOP");
   }
 
   endBreak() {
     this.changeMode("pomodoro");
+
+    this.notifyPlugins("TIMER_END");
   }
 
   endPomodoro() {
     const isLongBreak = this._state.cycle % this._state.longBreakInterval === 0;
     this._state.cycle++;
     isLongBreak ? this.changeMode("longBreak") : this.changeMode("shortBreak");
+
+    this.notifyPlugins("TIMER_END");
   }
 
   registerPlugin(plugin) {
@@ -174,6 +188,17 @@ class Timer {
       this.plugins[index].deactivate();
       this.plugins.splice(index, 1);
     }
+  }
+
+  notifyPlugins(
+    /**
+     * @type {"TIMER_START" | "TIMER_PAUSE" | "TIMER_STOP" | "TIMER_END"}
+     */
+    eventName
+  ) {
+    this.plugins.forEach((plugin) => {
+      plugin.onEvent(eventName);
+    });
   }
 }
 

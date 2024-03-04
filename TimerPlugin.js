@@ -1,11 +1,18 @@
 class TimerPlugin {
-  constructor(timer) {
+  constructor(
+    /**
+     * @type {import("./Timer.js").default}
+     */
+    timer
+  ) {
     this.timer = timer;
   }
 
   activate() {}
 
   deactivate() {}
+
+  onEvent(eventName) {}
 }
 
 export default TimerPlugin;
