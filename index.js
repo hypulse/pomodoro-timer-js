@@ -1,4 +1,4 @@
-import TaskManager from "./TaskManagerjs";
+import TaskManager from "./TaskManager.js";
 import Timer from "./Timer.js";
 
 const html = `
@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const app = document.getElementById("app");
 
   const timer = new Timer("timer", html, css);
+  const taskManager = new TaskManager([], timer);
+  timer.registerPlugin(taskManager);
   app.appendChild(timer.element);
 
   const timer2 = new Timer(
@@ -36,9 +38,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   );
   app.appendChild(timer2.element);
-
-  const timer3 = new Timer("timer3", html, css);
-  app.appendChild(timer.element);
-  const taskManager = new TaskManager([], timer3);
-  timer3.registerPlugin(taskManager);
 });

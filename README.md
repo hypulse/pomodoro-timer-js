@@ -1,6 +1,6 @@
 # Pomodoro Timer Component
 
-This is a prototype for a class-based Pomodoro timer widget built with vanilla JavaScript.
+A prototype for a class-based Pomodoro timer widget built with vanilla JavaScript. This is a personal example to explore better widget structure.
 
 ## Deisgn Considerations
 
@@ -52,3 +52,5 @@ document.addEventListener("DOMContentLoaded", () => {
 ## To Do
 
 - [ ] Apply scoped CSS styles to each instance
+- [ ] Add plugin support
+- [ ] Define a Widget class

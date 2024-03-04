@@ -11,10 +11,12 @@ class TaskManager extends TimerPlugin {
      * }[]}
      */
     tasks = [],
+    currentTask,
     timer
   ) {
     super(timer);
     this.tasks = tasks;
+    this.currentTask = currentTask;
   }
 
   addTask(task) {
@@ -50,6 +52,18 @@ class TaskManager extends TimerPlugin {
       }
       return task;
     });
+  }
+
+  activate() {}
+
+  deactivate() {}
+
+  onEvent(eventName) {
+    if (eventName === "TIMER_END_POMODORO") {
+      if (this.currentTask) {
+        this.addCycle(this.currentTask.id);
+      }
+    }
   }
 }
 

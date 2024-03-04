@@ -166,7 +166,7 @@ class Timer {
   endBreak() {
     this.changeMode("pomodoro");
 
-    this.notifyPlugins("TIMER_END");
+    this.notifyPlugins("TIMER_END_BREAK");
   }
 
   endPomodoro() {
@@ -174,7 +174,7 @@ class Timer {
     this._state.cycle++;
     isLongBreak ? this.changeMode("longBreak") : this.changeMode("shortBreak");
 
-    this.notifyPlugins("TIMER_END");
+    this.notifyPlugins("TIMER_END_POMODORO");
   }
 
   registerPlugin(plugin) {
@@ -192,7 +192,7 @@ class Timer {
 
   notifyPlugins(
     /**
-     * @type {"TIMER_START" | "TIMER_PAUSE" | "TIMER_STOP" | "TIMER_END"}
+     * @type {"TIMER_START" | "TIMER_PAUSE" | "TIMER_STOP" | "TIMER_END_POMODORO" | "TIMER_END_BREAK"}
      */
     eventName
   ) {
